@@ -11,7 +11,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("https://dreamers-academy.onrender.com/Login", { email, password });
+            const response = await axios.post("https://dreamers-academy.onrender.com/login", { email, password });
 
             if (response.data.message === "Success") {
                 localStorage.setItem("user", JSON.stringify(response.data.user)); // Store user details
