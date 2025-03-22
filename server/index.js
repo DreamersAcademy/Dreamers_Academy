@@ -23,7 +23,7 @@ mongoose.connect(process.env.MONGO_URI, {
 .catch(err => console.error("❌ MongoDB Connection Error:", err));
 
 // Register Route
-app.post("/register", (req, res) => {
+app.post("/signup", (req, res) => {
     CustomersModel.create(req.body)
         .then(customers => res.json(customers))
         .catch(err => res.json(err));
