@@ -8,7 +8,10 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-mongoose.connect("mongodb://localhost:27017/Customers");
+mongoose.connect("mongodb://127.0.0.1:27017/Customers",{
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+});
 
 // Register Route
 app.post("/register", (req, res) => {
@@ -37,11 +40,10 @@ app.post("/login", (req, res) => {
 
 // Booking Route
 app.post("/book-seat", async (req, res) => {
-    console.log("📢 Received Booking Data:", req.body); // Debugging
+    console.log("📢 Received Booking Data:", req.body); 
 
     const { name, email, phone, courseTitle, preferredBatch, additionalInfo } = req.body;
 
-    // Ensure all required fields are present
     if (!name || !email || !phone || !courseTitle || !preferredBatch) {
         console.error("❌ Missing required fields:", req.body);
         return res.status(400).json({ message: "Missing required fields!" });
