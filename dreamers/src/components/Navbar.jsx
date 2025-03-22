@@ -112,7 +112,7 @@ const Navbar = () => {
               </div>
             ))}
             <Button className="bg-black text-white hover:bg-gray-800"
-             onClick={() => navigate("/register")}
+             onClick={() => navigate("/signup")}
             >Enroll Now</Button>
           </div>
           
