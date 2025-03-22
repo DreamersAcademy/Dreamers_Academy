@@ -207,7 +207,7 @@ const BookSeat = () => {
       description: "Submitting your registration...",
     });
 
-    axios.post("http://localhost:3000/book-seat", bookingData)
+    axios.post("https://dreamers-academy.onrender.com/book-seat", bookingData)
     .then((res) => {
         console.log("✅ Booking Success:", res.data);
         

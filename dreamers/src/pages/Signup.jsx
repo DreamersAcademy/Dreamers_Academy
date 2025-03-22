@@ -33,7 +33,7 @@ const Signup = () => {
             return;
         }
 
-        axios.post("http://localhost:3000/register", { name, email, password, mobile })
+        axios.post("https://dreamers-academy.onrender.com/register", { name, email, password, mobile })
             .then((result) => {
                 console.log(result);
                 alert("Registration successful! Please log in.");

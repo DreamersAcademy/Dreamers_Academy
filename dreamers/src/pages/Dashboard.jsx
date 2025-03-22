@@ -54,7 +54,7 @@ const Dashboard = () => {
 
     const fetchUserBookings = (email) => {
         // In a real app, uncomment this code to fetch from your backend
-        axios.get(`http://localhost:3000/user-bookings/${email}`)
+        axios.get(`https://dreamers-academy.onrender.com/${email}`)
             .then((res) => {
                 setBookings(res.data.bookings);
                 toast({
