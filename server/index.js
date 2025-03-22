@@ -6,7 +6,11 @@ const BookingModel = require("./models/Booking");
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: ["https://https://dreamers-academy-kappa.vercel.app"], // Allow Vercel frontend
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
 
 mongoose.connect("mongodb://127.0.0.1:27017/Customers",{
     useNewUrlParser: true,
