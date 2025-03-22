@@ -7,15 +7,19 @@ const BookingModel = require("./models/Booking");
 const app = express();
 app.use(express.json());
 app.use(cors({
-  origin: ["https://https://dreamers-academy-kappa.vercel.app"], // Allow Vercel frontend
+  origin: ["https://dreamers-academy-kappa.vercel.app"], // Allow Vercel frontend
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
 
-mongoose.connect("mongodb://127.0.0.1:27017/Customers",{
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
+require("dotenv").config(); // Load environment variables
+
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => console.log("✅ MongoDB Connected"))
+.catch(err => console.error("❌ MongoDB Connection Error:", err));
 
 // Register Route
 app.post("/register", (req, res) => {
