@@ -2,14 +2,17 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../index.css";
+import { ButtonLoader } from "../components/ui/loader";
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsSubmitting(true);
         try {
             const response = await axios.post("https://dreamers-academy.onrender.com/login", { email, password });
 
@@ -18,10 +21,12 @@ const Login = () => {
                 navigate("/Dashboard");
             } else {
                 alert(response.data.message); // Show error message
+                setIsSubmitting(false);
             }
         } catch (error) {
             console.error("Login error:", error);
             alert("Something went wrong. Please try again.");
+            setIsSubmitting(false);
         }
     };
 
@@ -42,6 +47,7 @@ const Login = () => {
                             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:outline-none transition-all"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            disabled={isSubmitting}
                         />
                     </div>
 
@@ -54,15 +60,17 @@ const Login = () => {
                             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:outline-none transition-all"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
+                            disabled={isSubmitting}
                         />
                     </div>
 
-                    {/* Login Button */}
+                    {/* Login Button with Loader */}
                     <button
                         type="submit"
                         className="w-full p-3 bg-purple-600 text-white font-semibold text-lg rounded-lg hover:bg-purple-700 transition duration-300"
+                        disabled={isSubmitting}
                     >
-                        Login
+                        {isSubmitting ? <ButtonLoader /> : "Login"}
                     </button>
                 </form>
 
