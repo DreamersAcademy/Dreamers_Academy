@@ -1,14 +1,15 @@
 import React from 'react';
 import { GraduationCap, Book, Users, Award, Sparkles, ArrowRight } from 'lucide-react';
-import { Button } from './ui/button';
-import { Link } from 'react-router-dom';
+import { Button } from '../components/ui/button';
 import { useNavigate } from 'react-router-dom';
-const Introduction = () => {
+
+const Index = () => {
   const navigate = useNavigate();
-  const handleClick = (e) => {
-    e.preventDefault();
+  
+  const handleEnroll = () => {
     navigate("/signup");
-};
+  };
+  
   return (
     <section className="relative py-16 md:py-24 overflow-hidden bg-gradient-to-br from-white via-purple-50 to-blue-50">
       {/* Background decorative elements */}
@@ -83,10 +84,9 @@ const Introduction = () => {
             {/* CTA buttons */}
             <div className="flex flex-wrap gap-4 mt-4">
               <Button 
-              onClick={handleClick}
-              onTouchStart={handleClick}
+                onClick={handleEnroll}
                 size="lg"
-                className="rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-colors group"
+                className="rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-colors group touch-manipulation"
               >
                 Enroll Now
                 <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
@@ -95,7 +95,7 @@ const Introduction = () => {
               <Button 
                 variant="outline" 
                 size="lg"
-                className="rounded-full border-gray-300 hover:bg-gray-50 transition-colors"
+                className="rounded-full border-gray-300 hover:bg-gray-50 transition-colors touch-manipulation"
               >
                 Schedule Tour
               </Button>
@@ -159,4 +159,4 @@ const Introduction = () => {
   );
 };
 
-export default Introduction;
+export default Index;
