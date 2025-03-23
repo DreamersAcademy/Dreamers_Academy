@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../index.css";
+import { useIsMobile } from "../hooks/use-mobile";
+import { toast } from "../components/ui/use-toast";
+import { ButtonLoader } from "../components/ui/loader";
+import { Button } from "../components/ui/button";
 
 const Signup = () => {
     const [name, setName] = useState("");
@@ -9,11 +12,14 @@ const Signup = () => {
     const [password, setPassword] = useState("");
     const [mobile, setMobile] = useState("");
     const [errors, setErrors] = useState({});
-
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    
     const navigate = useNavigate();
+    const isMobile = useIsMobile();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsSubmitting(true);
 
         let newErrors = {};
 
@@ -21,7 +27,6 @@ const Signup = () => {
         if (!email) newErrors.email = "Please enter your email.";
         if (!password) newErrors.password = "Please enter your password.";
 
-        // Mobile number validation (must be 10 digits)
         if (!mobile) {
             newErrors.mobile = "Please enter your mobile number.";
         } else if (!/^\d{10}$/.test(mobile)) {
@@ -30,16 +35,45 @@ const Signup = () => {
 
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
+            setIsSubmitting(false);
             return;
         }
 
-        axios.post("https://dreamers-academy.onrender.com/signup", { name, email, password, mobile })
-            .then((result) => {
-                console.log(result);
-                alert("Registration successful! Please log in.");
-                navigate("/Login");
-            })
-            .catch((err) => console.log(err));
+        try {
+            const result = await axios.post("https://dreamers-academy.onrender.com/signup", { 
+                name, 
+                email, 
+                password, 
+                mobile 
+            });
+            
+            console.log(result);
+            
+            toast({
+                title: "Registration successful!",
+                description: "Please log in with your new account.",
+                duration: 3000,
+            });
+            
+            setTimeout(() => {
+                window.location.href = "/Login";
+            }, 300);
+            
+        } catch (err) {
+            console.log(err);
+            toast({
+                title: "Registration failed",
+                description: "Please try again later",
+                variant: "destructive",
+                duration: 3000,
+            });
+            setIsSubmitting(false);
+        }
+    };
+
+    const handleLoginClick = (e) => {
+        e.preventDefault();
+        navigate("/Login");
     };
 
     return (
@@ -50,7 +84,6 @@ const Signup = () => {
                 </h2>
 
                 <form onSubmit={handleSubmit} className="space-y-5">
-                    {/* Name Input */}
                     <div className="text-left">
                         <label className="block font-medium text-gray-700">Full Name</label>
                         <input
@@ -59,37 +92,37 @@ const Signup = () => {
                             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:outline-none transition-all"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
+                            disabled={isSubmitting}
                         />
                         {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
                     </div>
-
-                    {/* Mobile Number Input */}
                     <div className="text-left">
                         <label className="block font-medium text-gray-700">Mobile Number</label>
                         <input
-                            type="text"
+                            type="tel"
+                            inputMode="numeric"
+                            pattern="[0-9]*"
                             placeholder="Enter your mobile number"
                             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:outline-none transition-all"
                             value={mobile}
-                            onChange={(e) => setMobile(e.target.value)}
+                            onChange={(e) => setMobile(e.target.value.replace(/\D/g, ''))}
+                            disabled={isSubmitting}
                         />
                         {errors.mobile && <p className="text-red-500 text-sm mt-1">{errors.mobile}</p>}
                     </div>
-
-                    {/* Email Input */}
                     <div className="text-left">
                         <label className="block font-medium text-gray-700">Email Address</label>
                         <input
                             type="email"
+                            inputMode="email"
                             placeholder="Enter your email"
                             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:outline-none transition-all"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            disabled={isSubmitting}
                         />
                         {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
                     </div>
-
-                    {/* Password Input */}
                     <div className="text-left">
                         <label className="block font-medium text-gray-700">Password</label>
                         <input
@@ -98,25 +131,28 @@ const Signup = () => {
                             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:outline-none transition-all"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
+                            disabled={isSubmitting}
                         />
                         {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
                     </div>
-
-                    {/* Register Button */}
-                    <button
+                    <Button
                         type="submit"
+                        disabled={isSubmitting}
                         className="w-full p-3 bg-purple-600 text-white font-semibold text-lg rounded-lg hover:bg-purple-700 transition duration-300"
                     >
-                        Sign Up
-                    </button>
+                        {isSubmitting ? <ButtonLoader /> : 'Sign Up'}
+                    </Button>
                 </form>
 
-                {/* Already have an account */}
                 <p className="text-sm mt-4 text-gray-600">
                     Already have an account?
-                    <Link to="/Login" className="text-purple-600 font-semibold hover:underline ml-1">
+                    <button 
+                        onClick={handleLoginClick}
+                        onTouchEnd={isMobile ? handleLoginClick : undefined}
+                        className="text-purple-600 font-semibold hover:underline ml-1 appearance-none bg-transparent border-none cursor-pointer"
+                    >
                         Log in
-                    </Link>
+                    </button>
                 </p>
             </div>
         </div>
