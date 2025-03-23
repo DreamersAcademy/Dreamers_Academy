@@ -2,12 +2,12 @@ import React from 'react';
 import { GraduationCap, Book, Users, Award, Sparkles, ArrowRight } from 'lucide-react';
 import { Button } from './ui/button';
 import { Link } from 'react-router-dom';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 const Introduction = () => {
   const navigate = useNavigate();
   const handleClick = (e) => {
     e.preventDefault();
-    navigate("/Login");
+    navigate("/signup");
 };
   return (
     <section className="relative py-16 md:py-24 overflow-hidden bg-gradient-to-br from-white via-purple-50 to-blue-50">
