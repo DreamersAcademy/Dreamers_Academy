@@ -3,7 +3,7 @@ import { GraduationCap, Book, Users, Award, Sparkles, ArrowRight } from 'lucide-
 import { Button } from '../components/ui/button';
 import { useNavigate } from 'react-router-dom';
 
-const Index = () => {
+const Hero = () => {
   const navigate = useNavigate();
   
   
@@ -157,4 +157,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Hero;
