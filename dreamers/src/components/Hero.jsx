@@ -84,6 +84,7 @@ const Introduction = () => {
             <div className="flex flex-wrap gap-4 mt-4">
               <Button 
               onClick={handleClick}
+              onTouchStart={handleClick}
                 size="lg"
                 className="rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-colors group"
               >
