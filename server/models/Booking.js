@@ -7,7 +7,8 @@ const BookingSchema = new mongoose.Schema({
     courseTitle: { type: String, required: true },
     preferredBatch: { type: String, required: true },
     additionalInfo: { type: String }
-});
+}, { timestamps: true });
+
 
 const BookingModel = mongoose.model("bookings", BookingSchema);
 module.exports = BookingModel;
