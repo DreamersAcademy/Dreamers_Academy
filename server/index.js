@@ -97,23 +97,12 @@ app.get("/bookings/:email", async (req, res) => {
 
 
 
-app.get("/user-bookings/:email", async (req, res) => {
-    const { email } = req.params;
-
+app.get("/book-seat", async (req, res) => {
     try {
-        const user = await CustomersModel.findOne({ email });
-
-        if (!user) {
-            return res.status(404).json({ message: "User not found." });
-        }
-
-        res.json({ bookings: user.bookings });
+        const bookings = await BookingModel.find();
+        res.json(bookings);  // ✅ Return an array
     } catch (err) {
-        console.error("Error fetching user bookings:", err);
-        res.status(500).json({ error: "Failed to retrieve bookings." });
+        console.error("❌ Error fetching bookings:", err);
+        res.status(500).json({ error: "Failed to fetch bookings." });
     }
-});
-
-app.listen(3000, () => {
-    console.log("Server is running on port 3000");
 });
