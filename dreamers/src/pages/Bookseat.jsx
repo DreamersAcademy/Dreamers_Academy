@@ -60,8 +60,20 @@ const BookSeat = () => {
   const phonePattern = /^(\+\d{1,3}[\s.-]?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/;
 
   useEffect(() => {
-    // In a real app, you'd fetch the course data based on the courseTitle
-    // For now, we'll just set some dummy data
+    const loggedInUser = localStorage.getItem("user");
+  
+    if (!loggedInUser) {
+      navigate("/Login");
+      return;
+    }
+  
+    const user = JSON.parse(loggedInUser);
+    setFormData((prev) => ({
+      ...prev,
+      email: user.email, // Pre-fill email
+    }));
+  
+    // Fetch course details
     const courseData = {
       title: courseTitle || "Course",
       level: "Intermediate",
@@ -71,20 +83,26 @@ const BookSeat = () => {
       batches: ["Morning (9AM-11AM)", "Afternoon (2PM-4PM)", "Evening (6PM-8PM)"]
     };
     setCourse(courseData);
-    
-    // Check if user is logged in
-    const loggedInUser = localStorage.getItem("user");
-    if (!loggedInUser) {
-      navigate("/Login");
-    } else {
-      // Pre-fill email with logged in user's email
-      const user = JSON.parse(loggedInUser);
-      setFormData(prev => ({
-        ...prev,
-        email: user.email
-      }));
-    }
+  
+    // Fetch existing booking data
+    axios.get(`https://dreamers-academy.onrender.com/book-seat/${user.email}/${courseTitle}`)
+      .then((res) => {
+        if (res.data) {
+          setFormData({
+            name: res.data.name || "",
+            email: res.data.email || user.email,
+            phone: res.data.phone || "",
+            preferredBatch: res.data.preferredBatch || "",
+            additionalInfo: res.data.additionalInfo || "",
+          });
+        }
+      })
+      .catch((err) => {
+        console.error("🚨 Fetch Booking Error:", err.message);
+      });
+  
   }, [courseTitle, navigate]);
+  
 
   const validateField = (name, value) => {
     let errorMessage = "";
@@ -169,8 +187,7 @@ const BookSeat = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Validate all fields before submission
+  
     if (!validateForm()) {
       toast({
         title: "Form Validation Error",
@@ -179,59 +196,60 @@ const BookSeat = () => {
       });
       return;
     }
-
-    const user = JSON.parse(localStorage.getItem("user")); 
+  
+    const user = JSON.parse(localStorage.getItem("user"));
     if (!user) {
-        toast({
-          title: "Authentication Error",
-          description: "Please log in first!",
-          variant: "destructive"
-        });
-        navigate("/Login");
-        return;
+      toast({
+        title: "Authentication Error",
+        description: "Please log in first!",
+        variant: "destructive"
+      });
+      navigate("/Login");
+      return;
     }
-
+  
     const bookingData = {
-        name: formData.name,
-        email: user.email,
-        phone: formData.phone,
-        courseTitle,
-        preferredBatch: formData.preferredBatch,
-        additionalInfo: formData.additionalInfo || ""
+      name: formData.name,
+      email: user.email,
+      phone: formData.phone,
+      courseTitle,
+      preferredBatch: formData.preferredBatch,
+      additionalInfo: formData.additionalInfo || ""
     };
-
+  
     console.log("📢 Sending Booking Data:", bookingData);
-
+  
     toast({
       title: "Processing",
       description: "Submitting your registration...",
     });
-
-    axios.post("https://dreamers-academy.onrender.com/book-seat", bookingData)
-    .then((res) => {
-        console.log("✅ Booking Success:", res.data);
-        
+  
+    // Check if booking exists and update instead of creating a new one
+    axios.put(`https://dreamers-academy.onrender.com/book-seat/${user.email}/${courseTitle}`, bookingData)
+      .then((res) => {
+        console.log("✅ Booking Updated:", res.data);
+  
         toast({
           title: "Success!",
-          description: "Your seat has been booked successfully.",
+          description: "Your booking details have been updated successfully.",
           variant: "success"
         });
-    
-        // Wait for 2 seconds before redirecting
+  
         setTimeout(() => {
-            navigate("/dashboard");
+          navigate("/dashboard");
         }, 2000);
-    })
-    .catch(err => {
-        console.error("🚨 Booking Error:", err.message);
-        
+      })
+      .catch(err => {
+        console.error("🚨 Update Error:", err.message);
+  
         toast({
-          title: "Booking Failed",
+          title: "Update Failed",
           description: err.response?.data?.message || "Something went wrong. Please try again.",
           variant: "destructive"
         });
-    });
+      });
   };
+  
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-50 py-8 px-4 md:px-8">
@@ -430,7 +448,7 @@ const BookSeat = () => {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-sm text-gray-500 dark:text-black">Start Date:</span>
-                    <span className="text-sm font-medium">Next batch: July 15, 2023</span>
+                    <span className="text-sm font-medium">Next batch: July 15, 2025</span>
                   </div>
                 </div>
               </CardContent>
