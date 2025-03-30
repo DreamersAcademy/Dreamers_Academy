@@ -235,8 +235,8 @@ const Dashboard = () => {
             <Card className="hover:shadow-lg transition-shadow">
                 <CardContent className="p-4 md:p-6">
                     <div className="flex items-center space-x-4">
-                        <div className="p-3 bg-purple-100 dark:bg-purple-900 rounded-xl">
-                            <BookOpen className="h-6 w-6 text-purple-500 dark:text-black" />
+                        <div className="p-3 bg-purple-100 dark:bg-purple-300 rounded-xl">
+                            <BookOpen className="h-6 w-6 text-purple-500 dark:text-purple-400" />
                         </div>
                         <div>
                             <p className="text-sm font-medium text-gray-500 dark:text-black">Total Courses</p>
@@ -249,7 +249,7 @@ const Dashboard = () => {
             <Card className="hover:shadow-lg transition-shadow">
                 <CardContent className="p-4 md:p-6">
                     <div className="flex items-center space-x-4">
-                        <div className="p-3 bg-purple-100 dark:bg-purple-900 rounded-xl">
+                        <div className="p-3 bg-purple-100 dark:bg-purple-300 rounded-xl">
                             <Users className="h-6 w-6 text-purple-500 dark:text-purple-400" />
                         </div>
                         <div>
@@ -263,7 +263,7 @@ const Dashboard = () => {
             <Card className="hover:shadow-lg transition-shadow sm:col-span-2 lg:col-span-1">
                 <CardContent className="p-4 md:p-6">
                     <div className="flex items-center space-x-4">
-                        <div className="p-3 bg-purple-100 dark:bg-purple-900 rounded-xl">
+                        <div className="p-3 bg-purple-100 dark:bg-purple-300 rounded-xl">
                             <Award className="h-6 w-6 text-purple-500 dark:text-purple-400" />
                         </div>
                         <div>
