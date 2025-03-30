@@ -466,8 +466,12 @@ const Dashboard = () => {
                                     <tr key={index} className="hover:bg-purple-50/30 dark:hover:bg-purple-900/10 transition-colors">
                                         <td className="px-3 md:px-6 py-3 md:py-4 whitespace-nowrap text-xs md:text-sm font-medium text-gray-900 dark:text-white">{booking.courseTitle}</td>
                                         <td className="px-3 md:px-6 py-3 md:py-4 whitespace-nowrap text-xs md:text-sm text-gray-500 dark:text-gray-400">{booking.preferredBatch}</td>
-                                        <td className="px-3 md:px-6 py-3 md:py-4 whitespace-nowrap text-xs md:text-sm text-gray-500 dark:text-gray-400">{booking.startDate}</td>
-                                        <td className="px-3 md:px-6 py-3 md:py-4 whitespace-nowrap text-xs md:text-sm text-gray-500 dark:text-gray-400">{booking.progress}</td>
+                                        <td className="px-3 md:px-6 py-3 md:py-4 whitespace-nowrap text-xs md:text-sm text-gray-500 dark:text-gray-400">
+                                            {booking.startDate ? new Date(booking.startDate).toLocaleDateString() : "N/A"}
+                                        </td>
+                                        <td className="px-3 md:px-6 py-3 md:py-4 whitespace-nowrap text-xs md:text-sm text-gray-500 dark:text-gray-400">
+                                            {booking.progress ? `${booking.progress}%` : "Not Started"}
+                                        </td>
                                         <td className="px-3 md:px-6 py-3 md:py-4 whitespace-nowrap">
                                             <Badge className="bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400 border-0">
                                                 <CheckCircle className="h-3 w-3 mr-1" />
