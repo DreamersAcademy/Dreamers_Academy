@@ -76,27 +76,6 @@ app.post("/book-seat", async (req, res) => {
     }
 });
 
-app.put("/book-seat/:email/:courseTitle", async (req, res) => {
-    const { email, courseTitle } = req.params;
-    const { preferredBatch, additionalInfo } = req.body;
-
-    try {
-        const booking = await BookingModel.findOneAndUpdate(
-            { email, courseTitle },  // Find booking by email & course
-            { preferredBatch, additionalInfo }, // Update fields
-            { new: true }
-        );
-
-        if (!booking) {
-            return res.status(404).json({ message: "Booking not found." });
-        }
-
-        res.json({ message: "Booking updated successfully!", booking });
-    } catch (err) {
-        console.error("❌ Error updating booking:", err);
-        res.status(500).json({ error: "Failed to update booking." });
-    }
-});
 
 
 app.get("/user-bookings/:email", async (req, res) => {
