@@ -577,8 +577,8 @@ const Dashboard = () => {
         <div className="mb-8 md:mb-12 animate-fade-in">
             <Card className="bg-gradient-to-r from-purple-50 to-indigo-50  border-0 shadow-md">
                 <CardContent className="p-6 md:p-8">
-                    <h2 className="text-2xl md:text-3xl font-bold text-gray-800 dark:text-white mb-4">Welcome to Dreamers Academy</h2>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-3xl">
+                    <h2 className="text-2xl md:text-3xl font-bold text-gray-800 dark:text-black mb-4">Welcome to Dreamers Academy</h2>
+                    <p className="text-gray-600 dark:text-gray-700 mb-6 max-w-3xl">
                         We're dedicated to helping you achieve your language learning goals through expert guidance, 
                         personalized attention, and proven teaching methodologies. Explore our courses and resources
                         to start your language learning journey with us.
