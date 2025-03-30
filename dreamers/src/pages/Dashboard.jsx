@@ -458,19 +458,22 @@ const Dashboard = () => {
             </Card>
         </div>
     );
-
+    const [editingBooking, setEditingBooking] = useState(null);
     const handleDeleteBooking = async (bookingId) => {
         if (!window.confirm("Are you sure you want to delete this booking?")) return;
     
         try {
-            await axios.delete(`https://dreamers-academy.onrender.com/bookings/${bookingId}`);
+            await axios.delete(`https://dreamers-academy.onrender.com/bookings`, {
+                data: { email: userEmail } // Send email instead of bookingId
+            });
+    
             toast({
                 title: "Booking deleted",
                 description: "Your booking has been successfully removed.",
                 variant: "destructive",
             });
     
-            // Update UI by refetching bookings
+            // Refresh bookings after deletion
             fetchUserBookings(userEmail);
         } catch (error) {
             console.error("Error deleting booking:", error);
@@ -482,10 +485,31 @@ const Dashboard = () => {
         }
     };
     
-    const handleEditBooking = (booking) => {
-        setEditingBooking(booking); // Store the booking details in state
-        setShowEditModal(true); // Show edit form
+    
+    const handleEditBooking = async (updatedBooking) => {
+        try {
+            const response = await axios.put(`https://dreamers-academy.onrender.com/bookings`, {
+                email: userEmail, // Identify booking by email
+                bookingData: updatedBooking, // Send updated booking details
+            });
+    
+            toast({
+                title: "Booking Updated",
+                description: "Your booking details have been updated successfully.",
+            });
+    
+            setShowEditModal(false); // Close modal after updating
+            fetchUserBookings(userEmail); // Refresh UI with updated data
+        } catch (error) {
+            console.error("Error updating booking:", error);
+            toast({
+                title: "Error updating booking",
+                description: "Could not update booking. Try again later.",
+                variant: "destructive",
+            });
+        }
     };
+    
     
     const renderMyBookings = () => (
         <div className="mb-8 md:mb-12 animate-fade-in">
