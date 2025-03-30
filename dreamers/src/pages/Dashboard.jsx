@@ -281,7 +281,7 @@ const Dashboard = () => {
         
         return (
             <div className="mb-8 md:mb-12 animate-fade-in animate-delay-200">
-                <h2 className="text-xl font-bold text-black dark:text-black   mb-4 md:mb-6">
+                <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-4 md:mb-6">
                     {showAllCourses ? "All Courses" : "Best Courses"}
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-6">
@@ -297,7 +297,7 @@ const Dashboard = () => {
                                             {course.level}
                                         </Badge>
                                     </div>
-                                    <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">{course.title}</h3>
+                                    <h3 className="text-lg font-semibold text-gray-800 dark:text-black mb-2">{course.title}</h3>
                                     <div className="space-y-2">
                                         <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
                                             <Clock className="h-4 w-4 mr-2" />
@@ -575,7 +575,7 @@ const Dashboard = () => {
 
     const renderWelcome = () => (
         <div className="mb-8 md:mb-12 animate-fade-in">
-            <Card className="bg-gradient-to-r from-purple-50 to-indigo-50 dark:from-purple-950/40 dark:to-indigo-950/40 border-0 shadow-md">
+            <Card className="bg-gradient-to-r from-purple-50 to-indigo-50  border-0 shadow-md">
                 <CardContent className="p-6 md:p-8">
                     <h2 className="text-2xl md:text-3xl font-bold text-gray-800 dark:text-white mb-4">Welcome to Dreamers Academy</h2>
                     <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-3xl">
