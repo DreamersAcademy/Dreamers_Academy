@@ -769,7 +769,7 @@ const Dashboard = () => {
                     </div>
                 </header>
 
-                <main className="py-6 px-4 md:py-8 md:px-8 bg-white">
+                <main className="py-6 px-4 md:py-8 md:px-8 bg-[#80008052]">
                     {activeSection === 'home' && (
                         <>
                             {renderWelcome()}
