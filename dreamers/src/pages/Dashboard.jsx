@@ -236,7 +236,7 @@ const Dashboard = () => {
                 <CardContent className="p-4 md:p-6">
                     <div className="flex items-center space-x-4">
                         <div className="p-3 bg-purple-100 dark:bg-purple-300 rounded-xl">
-                            <BookOpen className="h-6 w-6 text-purple-500 dark:text-purple-400" />
+                            <BookOpen className="h-6 w-6 text-purple-500 dark:text-black" />
                         </div>
                         <div>
                             <p className="text-sm font-medium text-gray-500 dark:text-black">Total Courses</p>
@@ -250,7 +250,7 @@ const Dashboard = () => {
                 <CardContent className="p-4 md:p-6">
                     <div className="flex items-center space-x-4">
                         <div className="p-3 bg-purple-100 dark:bg-purple-300 rounded-xl">
-                            <Users className="h-6 w-6 text-purple-500 dark:text-purple-400" />
+                            <Users className="h-6 w-6 text-purple-500 dark:text-black" />
                         </div>
                         <div>
                             <p className="text-sm font-medium text-gray-500 dark:text-black">Active Students</p>
@@ -264,7 +264,7 @@ const Dashboard = () => {
                 <CardContent className="p-4 md:p-6">
                     <div className="flex items-center space-x-4">
                         <div className="p-3 bg-purple-100 dark:bg-purple-300 rounded-xl">
-                            <Award className="h-6 w-6 text-purple-500 dark:text-purple-400" />
+                            <Award className="h-6 w-6 text-purple-500 dark:text-black" />
                         </div>
                         <div>
                             <p className="text-sm font-medium text-gray-500 dark:text-black">Success Rate</p>
