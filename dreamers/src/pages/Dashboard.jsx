@@ -293,17 +293,17 @@ const Dashboard = () => {
                                         <div className="p-2 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
                                             <BookOpen className="h-5 w-5 text-purple-500 dark:text-purple-400" />
                                         </div>
-                                        <Badge variant="outline" className="bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 border-purple-200 dark:border-purple-800">
+                                        <Badge variant="outline" className="bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-black border-purple-200 dark:border-purple-800">
                                             {course.level}
                                         </Badge>
                                     </div>
                                     <h3 className="text-lg font-semibold text-gray-800 dark:text-black mb-2">{course.title}</h3>
                                     <div className="space-y-2">
-                                        <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
+                                        <div className="flex items-center text-sm text-gray-500 dark:text-black">
                                             <Clock className="h-4 w-4 mr-2" />
                                             <span>{course.duration}</span>
                                         </div>
-                                        <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
+                                        <div className="flex items-center text-sm text-gray-500 dark:text-black">
                                             <Users className="h-4 w-4 mr-2" />
                                             <span>{course.studentsEnrolled} students</span>
                                         </div>
