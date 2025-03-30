@@ -281,7 +281,7 @@ const Dashboard = () => {
         
         return (
             <div className="mb-8 md:mb-12 animate-fade-in animate-delay-200">
-                <h2 className="text-xl font-bold text-gray-800 dark:text-black dark:bg-white  mb-4 md:mb-6">
+                <h2 className="text-xl font-bold text-black dark:text-black   mb-4 md:mb-6">
                     {showAllCourses ? "All Courses" : "Best Courses"}
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-6">
