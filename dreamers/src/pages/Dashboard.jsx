@@ -463,12 +463,10 @@ const Dashboard = () => {
         if (!window.confirm("Are you sure you want to delete this booking?")) return;
     
         try {
-            await axios.delete(`https://dreamers-academy.onrender.com/bookings`, {
-                data: { email: userEmail } // Send email instead of bookingId
-            });
+            await axios.delete(`https://dreamers-academy.onrender.com/bookings/${bookingId}`); // Use bookingId in URL
     
             toast({
-                title: "Booking deleted",
+                title: "Booking Deleted",
                 description: "Your booking has been successfully removed.",
                 variant: "destructive",
             });
@@ -478,7 +476,7 @@ const Dashboard = () => {
         } catch (error) {
             console.error("Error deleting booking:", error);
             toast({
-                title: "Error deleting booking",
+                title: "Error Deleting Booking",
                 description: "Could not delete booking. Try again later.",
                 variant: "destructive",
             });
@@ -486,12 +484,13 @@ const Dashboard = () => {
     };
     
     
-    const handleEditBooking = async (updatedBooking) => {
+    
+    const handleEditBooking = async (bookingId, updatedBooking) => {
         try {
-            const response = await axios.put(`https://dreamers-academy.onrender.com/bookings`, {
-                email: userEmail, // Identify booking by email
-                bookingData: updatedBooking, // Send updated booking details
-            });
+            const response = await axios.put(
+                `https://dreamers-academy.onrender.com/bookings/${bookingId}`, // Use bookingId in URL
+                updatedBooking // Send updated data directly
+            );
     
             toast({
                 title: "Booking Updated",
@@ -509,6 +508,7 @@ const Dashboard = () => {
             });
         }
     };
+    
     
     
     const renderMyBookings = () => (
