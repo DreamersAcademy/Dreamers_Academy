@@ -459,29 +459,19 @@ const Dashboard = () => {
         </div>
     );
     const [editingBooking, setEditingBooking] = useState(null);
-    const handleDeleteBooking = async (bookingId) => {
+    const handleDeleteBooking = (bookingId) => {
         if (!window.confirm("Are you sure you want to delete this booking?")) return;
     
-        try {
-            await axios.delete(`https://dreamers-academy.onrender.com/bookings/${bookingId}`); // Use bookingId in URL
+        // Remove the deleted booking from the UI
+        setBookings((prevBookings) => prevBookings.filter(booking => booking._id !== bookingId));
     
-            toast({
-                title: "Booking Deleted",
-                description: "Your booking has been successfully removed.",
-                variant: "destructive",
-            });
-    
-            // Refresh bookings after deletion
-            fetchUserBookings(userEmail);
-        } catch (error) {
-            console.error("Error deleting booking:", error);
-            toast({
-                title: "Error Deleting Booking",
-                description: "Could not delete booking. Try again later.",
-                variant: "destructive",
-            });
-        }
+        toast({
+            title: "Booking Removed",
+            description: "Your booking has been removed from the UI.",
+            variant: "destructive",
+        });
     };
+    
     
     
     
