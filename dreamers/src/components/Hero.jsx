@@ -1,13 +1,14 @@
 import React from 'react';
 import { GraduationCap, Book, Users, Award, Sparkles, ArrowRight } from 'lucide-react';
-import { Button } from '../components/ui/button';
+import { Button } from './ui/button';
+import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-
-const Hero = () => {
+const Introduction = () => {
   const navigate = useNavigate();
+  const handleClick = (e) => {
   
-  
-  
+    navigate("/signup");
+};
   return (
     <section className="relative py-16 md:py-24 overflow-hidden bg-gradient-to-br from-white via-purple-50 to-blue-50">
       {/* Background decorative elements */}
@@ -82,9 +83,9 @@ const Hero = () => {
             {/* CTA buttons */}
             <div className="flex flex-wrap gap-4 mt-4">
               <Button 
-                onClick={() => navigate("/signup")}
+              onClick={handleClick}
                 size="lg"
-                className="rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-colors group touch-manipulation"
+                className="rounded-full bg-purple-600 z-10 text-white hover:bg-purple-700 transition-colors group"
               >
                 Enroll Now
                 <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
@@ -93,7 +94,7 @@ const Hero = () => {
               <Button 
                 variant="outline" 
                 size="lg"
-                className="rounded-full border-gray-300 hover:bg-gray-50 transition-colors touch-manipulation"
+                className="rounded-full border-gray-300 hover:bg-gray-50 transition-colors"
               >
                 Schedule Tour
               </Button>
@@ -157,4 +158,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default Introduction;
