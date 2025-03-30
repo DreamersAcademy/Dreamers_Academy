@@ -76,6 +76,25 @@ app.post("/book-seat", async (req, res) => {
     }
 });
 
+app.get("/bookings/:email", async (req, res) => {
+    try {
+        const { email } = req.params;
+
+        // Fetch bookings for the specific user
+        const userBookings = await BookingModel.find({ email });
+
+        if (userBookings.length === 0) {
+            return res.status(404).json({ message: "No bookings found for this user" });
+        }
+
+        console.log("✅ Retrieved bookings for:", email, userBookings);
+        res.status(200).json(userBookings);
+    } catch (error) {
+        console.error("❌ Error fetching user bookings:", error);
+        res.status(500).json({ message: "Failed to fetch bookings", details: error.message });
+    }
+});
+
 
 
 app.get("/user-bookings/:email", async (req, res) => {
