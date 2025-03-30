@@ -238,10 +238,10 @@ const BookSeat = () => {
       <div className="max-w-4xl mx-auto">
         <Button 
           variant="ghost" 
-          className="mb-6 flex items-center gap-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+          className="mb-6 flex items-center gap-2 text-gray-600 dark:text-black hover:text-gray-900 dark:hover:text-black"
           onClick={() => navigate("/dashboard")}
         >
-          <ArrowLeft className="h-4 w-4" />
+          <ArrowLeft className="h-4 w-4 text-black" />
           Back to Dashboard
         </Button>
         
@@ -404,39 +404,39 @@ const BookSeat = () => {
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="p-2 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
-                    <BookOpen className="h-5 w-5 text-purple-500 dark:text-purple-400" />
+                    <BookOpen className="h-5 w-5 text-purple-500 dark:text-black" />
                   </div>
                   <Badge variant="outline" className="bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 border-purple-200 dark:border-purple-800">
                     {course?.level}
                   </Badge>
                 </div>
                 
-                <h3 className="text-xl font-semibold text-gray-800 dark:text-white">
+                <h3 className="text-xl font-semibold text-gray-800 dark:text-black">
                   {course?.title}
                 </h3>
                 
-                <p className="text-gray-600 dark:text-gray-300">
+                <p className="text-gray-600 dark:text-black">
                   {course?.description}
                 </p>
                 
                 <div className="pt-4 space-y-2 border-t border-gray-200 dark:border-gray-700">
                   <div className="flex justify-between">
-                    <span className="text-sm text-gray-500 dark:text-gray-400">Duration:</span>
+                    <span className="text-sm text-gray-500 dark:text-black">Duration:</span>
                     <span className="text-sm font-medium">{course?.duration}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-sm text-gray-500 dark:text-gray-400">Students:</span>
+                    <span className="text-sm text-gray-500 dark:text-black">Students:</span>
                     <span className="text-sm font-medium">{course?.studentsEnrolled}+ enrolled</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-sm text-gray-500 dark:text-gray-400">Start Date:</span>
+                    <span className="text-sm text-gray-500 dark:text-black">Start Date:</span>
                     <span className="text-sm font-medium">Next batch: July 15, 2023</span>
                   </div>
                 </div>
               </CardContent>
               <CardFooter className="bg-purple-50 dark:bg-purple-900/20 flex justify-center py-4">
-                <div className="flex items-center text-purple-600 dark:text-purple-400">
-                  <Calendar className="h-5 w-5 mr-2" />
+                <div className="flex items-center text-purple-600 dark:text-black">
+                  <Calendar className="h-5 w-5 mr-2 text-black" />
                   <span className="text-sm font-medium">Classes 3 times a week</span>
                 </div>
               </CardFooter>
