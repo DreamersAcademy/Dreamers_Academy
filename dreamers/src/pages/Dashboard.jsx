@@ -286,9 +286,7 @@ const Dashboard = () => {
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-6">
                     {displayCourses.map((course, index) => (
-                        <Card key={index}  className="hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 
-                        bg-purple-100 sm:bg-white dark:bg-purple-900/20"
-           >
+                        <Card key={index} className="hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 bg-gradient-to-r from-purple-50 to-indigo-50">
                             <CardContent className="p-4 md:p-6">
                                 <div className="flex flex-col h-full">
                                     <div className="flex items-center justify-between mb-4">
