@@ -458,100 +458,90 @@ const Dashboard = () => {
             </Card>
         </div>
     );
-    const [editingBooking, setEditingBooking] = useState(null);
-    const handleDeleteBooking = (bookingId) => {
-        if (!window.confirm("Are you sure you want to delete this booking?")) return;
+
+    const renderMyBookings = () => {
+        console.log("🔍 Rendering bookings:", bookings);
     
-        // Remove the deleted booking from the UI
-        setBookings((prevBookings) => prevBookings.filter(booking => booking._id !== bookingId));
+        const handleDeleteBooking = (index) => {
+            // Remove booking from the list
+            const updatedBookings = bookings.filter((_, i) => i !== index);
+            setBookings(updatedBookings);
+        };
     
-        toast({
-            title: "Booking Removed",
-            description: "Your booking has been removed from the UI.",
-            variant: "destructive",
-        });
-    };
+        return (
+            <div className="mb-8 md:mb-12 animate-fade-in">
+                <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-4 md:mb-6">Your Booked Courses</h2>
     
-    
-    
-    
-    const handleEditBooking = async (bookingId, updatedBooking) => {
-        try {
-            const response = await axios.put(
-                `https://dreamers-academy.onrender.com/bookings/${bookingId}`, // Use bookingId in URL
-                updatedBooking // Send updated data directly
-            );
-    
-            toast({
-                title: "Booking Updated",
-                description: "Your booking details have been updated successfully.",
-            });
-    
-            setShowEditModal(false); // Close modal after updating
-            fetchUserBookings(userEmail); // Refresh UI with updated data
-        } catch (error) {
-            console.error("Error updating booking:", error);
-            toast({
-                title: "Error updating booking",
-                description: "Could not update booking. Try again later.",
-                variant: "destructive",
-            });
-        }
-    };
-    
-    
-    
-    const renderMyBookings = () => (
-        <div className="mb-8 md:mb-12 animate-fade-in">
-            <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-4 md:mb-6">Your Booked Courses</h2>
-            {bookings.length > 0 ? (
-                <Card className="shadow overflow-hidden">
-                    <div className="overflow-x-auto">
-                        <table className="w-full table-auto">
-                            <thead className="bg-purple-50 dark:bg-purple-900/20">
-                                <tr>
-                                    <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Course</th>
-                                    <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Batch</th>
-                                    <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Start Date</th>
-                                    <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Progress</th>
-                                    <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
-                                    <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
-                                {bookings.map((booking) => (
-                                    <tr key={booking._id} className="hover:bg-purple-50/30 dark:hover:bg-purple-900/10 transition-colors">
-                                        <td className="px-3 py-3 text-xs font-medium text-gray-900 dark:text-white">{booking.courseTitle}</td>
-                                        <td className="px-3 py-3 text-xs text-gray-500 dark:text-gray-400">{booking.preferredBatch}</td>
-                                        <td className="px-3 py-3 text-xs text-gray-500 dark:text-gray-400">
-                                            {booking.startDate ? new Date(booking.startDate).toLocaleDateString() : "N/A"}
-                                        </td>
-                                        <td className="px-3 py-3 text-xs text-gray-500 dark:text-gray-400">{booking.progress ? `${booking.progress}%` : "Not Started"}</td>
-                                        <td className="px-3 py-3">
-                                            <Badge className="bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400 border-0">
-                                                <CheckCircle className="h-3 w-3 mr-1" />
-                                                Active
-                                            </Badge>
-                                        </td>
-                                        <td className="px-3 py-3 flex gap-2">
-                                            <Button onClick={() => handleEditBooking(booking)} size="sm" variant="outline">
-                                                Edit
-                                            </Button>
-                                            <Button onClick={() => handleDeleteBooking(booking._id)} size="sm" variant="destructive">
-                                                Delete
-                                            </Button>
-                                        </td>
+                {bookings.length > 0 ? (
+                    <Card className="shadow overflow-hidden">
+                        <div className="overflow-x-auto">
+                            <table className="w-full table-auto">
+                                <thead className="bg-purple-50 dark:bg-purple-900/20">
+                                    <tr>
+                                        <th className="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Course</th>
+                                        <th className="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Batch</th>
+                                        <th className="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Start Date</th>
+                                        <th className="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Progress</th>
+                                        <th className="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
+                                        <th className="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Action</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </Card>
-            ) : (
-                <p className="text-gray-600 dark:text-gray-400">You haven't booked any courses yet.</p>
-            )}
-        </div>
-    );
+                                </thead>
+                                <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
+                                    {bookings.map((booking, index) => (
+                                        <tr key={index} className="hover:bg-purple-50/30 dark:hover:bg-purple-900/10 transition-colors">
+                                            <td className="px-3 md:px-6 py-3 md:py-4 whitespace-nowrap text-xs md:text-sm font-medium text-gray-900 dark:text-white">
+                                                {booking.courseTitle}
+                                            </td>
+                                            <td className="px-3 md:px-6 py-3 md:py-4 whitespace-nowrap text-xs md:text-sm text-gray-500 dark:text-gray-400">
+                                                {booking.preferredBatch}
+                                            </td>
+                                            <td className="px-3 md:px-6 py-3 md:py-4 whitespace-nowrap text-xs md:text-sm text-gray-500 dark:text-gray-400">
+                                                {booking.startDate ? new Date(booking.startDate).toLocaleDateString() : "N/A"}
+                                            </td>
+                                            <td className="px-3 md:px-6 py-3 md:py-4 whitespace-nowrap text-xs md:text-sm text-gray-500 dark:text-gray-400">
+                                                {booking.progress ? `${booking.progress}%` : "Not Started"}
+                                            </td>
+                                            <td className="px-3 md:px-6 py-3 md:py-4 whitespace-nowrap">
+                                                <Badge className="bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400 border-0">
+                                                    <CheckCircle className="h-3 w-3 mr-1" />
+                                                    Active
+                                                </Badge>
+                                            </td>
+                                            <td className="px-3 md:px-6 py-3 md:py-4 whitespace-nowrap">
+                                                <Button 
+                                                    className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 text-xs md:text-sm"
+                                                    onClick={() => handleDeleteBooking(index)}
+                                                >
+                                                    Delete
+                                                </Button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </Card>
+                ) : (
+                    <Card>
+                        <CardContent className="p-6 text-center">
+                            <div className="flex flex-col items-center">
+                                <div className="p-3 bg-purple-100 dark:bg-purple-900/20 rounded-full mb-4">
+                                    <BookOpen className="h-8 w-8 text-purple-500 dark:text-purple-400" />
+                                </div>
+                                <p className="text-gray-600 dark:text-gray-400 mb-4">You haven't booked any courses yet.</p>
+                                <Button 
+                                    onClick={() => handleSectionChange('courses')}
+                                    className="bg-purple-600 hover:bg-purple-700 text-white"
+                                >
+                                    Browse Courses
+                                </Button>
+                            </div>
+                        </CardContent>
+                    </Card>
+                )}
+            </div>
+        );
+    };
     
 
     const renderProfile = () => (
