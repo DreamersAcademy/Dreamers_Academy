@@ -236,11 +236,11 @@ const Dashboard = () => {
                 <CardContent className="p-4 md:p-6">
                     <div className="flex items-center space-x-4">
                         <div className="p-3 bg-purple-100 dark:bg-purple-900 rounded-xl">
-                            <BookOpen className="h-6 w-6 text-purple-500 dark:text-purple-400" />
+                            <BookOpen className="h-6 w-6 text-purple-500 dark:text-black" />
                         </div>
                         <div>
-                            <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Total Courses</p>
-                            <h2 className="text-2xl font-bold text-gray-800 dark:text-white">12</h2>
+                            <p className="text-sm font-medium text-gray-500 dark:text-black">Total Courses</p>
+                            <h2 className="text-2xl font-bold text-gray-800 dark:text-black">12</h2>
                         </div>
                     </div>
                 </CardContent>
@@ -253,8 +253,8 @@ const Dashboard = () => {
                             <Users className="h-6 w-6 text-purple-500 dark:text-purple-400" />
                         </div>
                         <div>
-                            <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Active Students</p>
-                            <h2 className="text-2xl font-bold text-gray-800 dark:text-white">350+</h2>
+                            <p className="text-sm font-medium text-gray-500 dark:text-black">Active Students</p>
+                            <h2 className="text-2xl font-bold text-gray-800 dark:text-black">350+</h2>
                         </div>
                     </div>
                 </CardContent>
@@ -267,8 +267,8 @@ const Dashboard = () => {
                             <Award className="h-6 w-6 text-purple-500 dark:text-purple-400" />
                         </div>
                         <div>
-                            <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Success Rate</p>
-                            <h2 className="text-2xl font-bold text-gray-800 dark:text-white">92%</h2>
+                            <p className="text-sm font-medium text-gray-500 dark:text-black">Success Rate</p>
+                            <h2 className="text-2xl font-bold text-gray-800 dark:text-black">92%</h2>
                         </div>
                     </div>
                 </CardContent>
@@ -378,7 +378,7 @@ const Dashboard = () => {
 
     const renderWhyChooseUs = () => (
         <div className="mb-8 md:mb-12 animate-fade-in">
-            <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-4 md:mb-6">Why Choose Us</h2>
+            <h2 className="text-xl font-bold text-gray-800 dark:text-black mb-4 md:mb-6">Why Choose Us</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                 {whyChooseUs.map((item, index) => (
                     <Card key={index} className="hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
@@ -388,9 +388,9 @@ const Dashboard = () => {
                                     <div className="p-2 bg-purple-50 dark:bg-purple-900/20 rounded-lg mr-3">
                                         {item.icon}
                                     </div>
-                                    <h3 className="text-base md:text-lg font-semibold text-gray-800 dark:text-white">{item.title}</h3>
+                                    <h3 className="text-base md:text-lg font-semibold text-gray-800 dark:text-black">{item.title}</h3>
                                 </div>
-                                <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 mt-2">{item.description}</p>
+                                <p className="text-sm md:text-base text-gray-600 dark:text-black mt-2">{item.description}</p>
                             </div>
                         </CardContent>
                     </Card>
@@ -519,19 +519,19 @@ const Dashboard = () => {
                         
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
                             <div>
-                                <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">Personal Information</h4>
+                                <h4 className="text-sm font-medium text-gray-500 dark:text-black mb-2">Personal Information</h4>
                                 <div className="space-y-2">
                                     <div className="flex justify-between">
-                                        <span className="text-sm text-gray-600 dark:text-gray-300">Student ID</span>
-                                        <span className="text-sm font-medium text-gray-800 dark:text-white">DR-2023-001</span>
+                                        <span className="text-sm text-gray-600 dark:text-black">Student ID</span>
+                                        <span className="text-sm font-medium text-gray-800 dark:text-black">DR-2023-001</span>
                                     </div>
                                     <div className="flex justify-between">
-                                        <span className="text-sm text-gray-600 dark:text-gray-300">Joined</span>
-                                        <span className="text-sm font-medium text-gray-800 dark:text-white">Jan 15, 2023</span>
+                                        <span className="text-sm text-gray-600 dark:text-black">Joined</span>
+                                        <span className="text-sm font-medium text-gray-800 dark:text-black">Jan 15, 2023</span>
                                     </div>
                                     <div className="flex justify-between">
-                                        <span className="text-sm text-gray-600 dark:text-gray-300">Phone</span>
-                                        <span className="text-sm font-medium text-gray-800 dark:text-white">+91 98765 43210</span>
+                                        <span className="text-sm text-gray-600 dark:text-black">Phone</span>
+                                        <span className="text-sm font-medium text-gray-800 dark:text-black">+91 98765 43210</span>
                                     </div>
                                 </div>
                             </div>
