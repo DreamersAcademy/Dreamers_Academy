@@ -169,7 +169,8 @@ const BookSeat = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  
+
+    // Validate all fields before submission
     if (!validateForm()) {
       toast({
         title: "Form Validation Error",
@@ -178,60 +179,59 @@ const BookSeat = () => {
       });
       return;
     }
-  
-    const user = JSON.parse(localStorage.getItem("user"));
+
+    const user = JSON.parse(localStorage.getItem("user")); 
     if (!user) {
-      toast({
-        title: "Authentication Error",
-        description: "Please log in first!",
-        variant: "destructive"
-      });
-      navigate("/Login");
-      return;
+        toast({
+          title: "Authentication Error",
+          description: "Please log in first!",
+          variant: "destructive"
+        });
+        navigate("/Login");
+        return;
     }
-  
+
     const bookingData = {
-      name: formData.name,
-      email: user.email,
-      phone: formData.phone,
-      courseTitle,
-      preferredBatch: formData.preferredBatch,
-      additionalInfo: formData.additionalInfo || ""
+        name: formData.name,
+        email: user.email,
+        phone: formData.phone,
+        courseTitle,
+        preferredBatch: formData.preferredBatch,
+        additionalInfo: formData.additionalInfo || ""
     };
-  
+
     console.log("📢 Sending Booking Data:", bookingData);
-  
+
     toast({
       title: "Processing",
       description: "Submitting your registration...",
     });
-  
-    // Check if booking exists and update instead of creating a new one
-    axios.put(`https://dreamers-academy.onrender.com/book-seat/${user.email}/${courseTitle}`, bookingData)
-      .then((res) => {
-        console.log("✅ Booking Updated:", res.data);
-  
+
+    axios.post("https://dreamers-academy.onrender.com/book-seat", bookingData)
+    .then((res) => {
+        console.log("✅ Booking Success:", res.data);
+        
         toast({
           title: "Success!",
-          description: "Your booking details have been updated successfully.",
+          description: "Your seat has been booked successfully.",
           variant: "success"
         });
-  
+    
+        // Wait for 2 seconds before redirecting
         setTimeout(() => {
-          navigate("/dashboard");
+            navigate("/dashboard");
         }, 2000);
-      })
-      .catch(err => {
-        console.error("🚨 Update Error:", err.message);
-  
+    })
+    .catch(err => {
+        console.error("🚨 Booking Error:", err.message);
+        
         toast({
-          title: "Update Failed",
+          title: "Booking Failed",
           description: err.response?.data?.message || "Something went wrong. Please try again.",
           variant: "destructive"
         });
-      });
+    });
   };
-  
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-50 py-8 px-4 md:px-8">
