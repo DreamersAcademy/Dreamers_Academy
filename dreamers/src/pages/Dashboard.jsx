@@ -291,7 +291,7 @@ const Dashboard = () => {
                                 <div className="flex flex-col h-full">
                                     <div className="flex items-center justify-between mb-4">
                                         <div className="p-2 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
-                                            <BookOpen className="h-5 w-5 text-purple-500 dark:text-purple-400" />
+                                            <BookOpen className="h-5 w-5 text-purple-500 dark:text-black" />
                                         </div>
                                         <Badge variant="outline" className="bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-black border-purple-200 dark:border-purple-800">
                                             {course.level}
