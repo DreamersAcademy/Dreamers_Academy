@@ -52,27 +52,29 @@ const Dashboard = () => {
         }
     }, [navigate]);
 
-    const fetchUserBookings = (email) => {
-        // In a real app, uncomment this code to fetch from your backend
-        axios.get(`https://dreamers-academy.onrender.com/user-bookings/${email}`)
-            .then((res) => {
-                setBookings(res.data.bookings);
-                toast({
-                    title: "Bookings loaded",
-                    description: "Your course bookings have been loaded successfully.",
-                });
-            })
-            .catch(err => {
-                console.error("Error fetching bookings:", err);
-                toast({
-                    title: "Error loading bookings",
-                    description: "There was a problem fetching your bookings.",
-                    variant: "destructive"
-                });
+    const [loading, setLoading] = useState(false);
+
+const fetchUserBookings = (email) => {
+    setLoading(true);  // Start loading
+    axios.get(`https://dreamers-academy.onrender.com/bookings/${email}`)
+        .then((res) => {
+            setBookings(res.data);
+            toast({
+                title: "Bookings loaded",
+                description: "Your course bookings have been loaded successfully.",
             });
-        
-        
-    };
+        })
+        .catch(err => {
+            console.error("Error fetching bookings:", err);
+            toast({
+                title: "Error loading bookings",
+                description: "There was a problem fetching your bookings.",
+                variant: "destructive"
+            });
+        })
+        .finally(() => setLoading(false)); // Stop loading
+};
+
 
     const handleLogout = () => {
         localStorage.removeItem("user");
