@@ -60,20 +60,8 @@ const BookSeat = () => {
   const phonePattern = /^(\+\d{1,3}[\s.-]?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/;
 
   useEffect(() => {
-    const loggedInUser = localStorage.getItem("user");
-  
-    if (!loggedInUser) {
-      navigate("/Login");
-      return;
-    }
-  
-    const user = JSON.parse(loggedInUser);
-    setFormData((prev) => ({
-      ...prev,
-      email: user.email, // Pre-fill email
-    }));
-  
-    // Fetch course details
+    // In a real app, you'd fetch the course data based on the courseTitle
+    // For now, we'll just set some dummy data
     const courseData = {
       title: courseTitle || "Course",
       level: "Intermediate",
@@ -83,26 +71,20 @@ const BookSeat = () => {
       batches: ["Morning (9AM-11AM)", "Afternoon (2PM-4PM)", "Evening (6PM-8PM)"]
     };
     setCourse(courseData);
-  
-    // Fetch existing booking data
-    axios.get(`https://dreamers-academy.onrender.com/book-seat/${user.email}/${courseTitle}`)
-      .then((res) => {
-        if (res.data) {
-          setFormData({
-            name: res.data.name || "",
-            email: res.data.email || user.email,
-            phone: res.data.phone || "",
-            preferredBatch: res.data.preferredBatch || "",
-            additionalInfo: res.data.additionalInfo || "",
-          });
-        }
-      })
-      .catch((err) => {
-        console.error("🚨 Fetch Booking Error:", err.message);
-      });
-  
+    
+    // Check if user is logged in
+    const loggedInUser = localStorage.getItem("user");
+    if (!loggedInUser) {
+      navigate("/Login");
+    } else {
+      // Pre-fill email with logged in user's email
+      const user = JSON.parse(loggedInUser);
+      setFormData(prev => ({
+        ...prev,
+        email: user.email
+      }));
+    }
   }, [courseTitle, navigate]);
-  
 
   const validateField = (name, value) => {
     let errorMessage = "";
