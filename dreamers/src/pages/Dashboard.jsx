@@ -46,8 +46,7 @@ const Dashboard = () => {
             // Fetch user bookings if there's a user
             fetchUserBookings(parsedUser.email);
         } else {
-            // For demo purposes, we'll still show the dashboard
-            // In a real app, you might want to redirect to login
+        
             console.log("No user found in localStorage");
         }
     }, [navigate]);
@@ -86,7 +85,30 @@ const Dashboard = () => {
             });
     };
     
-
+    const deleteBooking = async (bookingId) => {
+        try {
+            const res = await axios.delete(`https://dreamers-academy.onrender.com/bookings/${bookingId}`);
+    
+            if (res.status === 200) {
+                setBookings(prevBookings => prevBookings.filter(booking => booking.id !== bookingId));
+    
+                toast({
+                    title: "Booking deleted",
+                    description: "The booking has been successfully deleted.",
+                });
+    
+                console.log(`✅ Booking ${bookingId} deleted successfully.`);
+            }
+        } catch (err) {
+            console.error("❌ Error deleting booking:", err);
+            toast({
+                title: "Error deleting booking",
+                description: "There was a problem deleting your booking.",
+                variant: "destructive"
+            });
+        }
+    };
+    
 
     const handleLogout = () => {
         localStorage.removeItem("user");
@@ -462,11 +484,7 @@ const Dashboard = () => {
     const renderMyBookings = () => {
         console.log("🔍 Rendering bookings:", bookings);
     
-        const handleDeleteBooking = (index) => {
-            // Remove booking from the list
-            const updatedBookings = bookings.filter((_, i) => i !== index);
-            setBookings(updatedBookings);
-        };
+    
     
         return (
             <div className="mb-8 md:mb-12 animate-fade-in">
@@ -510,7 +528,7 @@ const Dashboard = () => {
                                             <td className="px-3 md:px-6 py-3 md:py-4 whitespace-nowrap">
                                                 <Button 
                                                     className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 text-xs md:text-sm"
-                                                    onClick={() => handleDeleteBooking(index)}
+                                                    onClick={() => deleteBooking(booking.id)}
                                                 >
                                                     Delete
                                                 </Button>
