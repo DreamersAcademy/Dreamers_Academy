@@ -94,6 +94,27 @@ app.get("/bookings/:email", async (req, res) => {
         res.status(500).json({ message: "Failed to fetch bookings", details: error.message });
     }
 });
+app.delete("/bookings/:email/:id", async (req, res) => {
+    try {
+        const { email, id } = req.params;
+
+        // Find the booking to ensure it exists for the given user
+        const booking = await BookingModel.findOne({ _id: id, email });
+
+        if (!booking) {
+            return res.status(404).json({ message: "Booking not found for this user" });
+        }
+
+        // Delete the booking
+        await BookingModel.findByIdAndDelete(id);
+
+        console.log(`✅ Booking ${id} deleted successfully for ${email}`);
+        res.status(200).json({ message: "Booking deleted successfully" });
+    } catch (error) {
+        console.error("❌ Error deleting booking:", error);
+        res.status(500).json({ message: "Failed to delete booking", details: error.message });
+    }
+});
 
 
 
