@@ -85,6 +85,16 @@ const BookSeat = () => {
       }));
     }
   }, [courseTitle, navigate]);
+  const [paymentImage, setPaymentImage] = useState(null);
+  const [preview, setPreview] = useState(null);
+
+  const handleImageChange = (e) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setPaymentImage(file);
+      setPreview(URL.createObjectURL(file));
+    }
+  };
 
   const validateField = (name, value) => {
     let errorMessage = "";
