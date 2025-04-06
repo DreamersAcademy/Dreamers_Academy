@@ -90,11 +90,13 @@ const BookSeat = () => {
 
   const handleImageChange = (e) => {
     const file = e.target.files?.[0];
+    console.log("Image selected:", file); // ✅ Confirm selection
     if (file) {
       setPaymentImage(file);
       setPreview(URL.createObjectURL(file));
     }
   };
+  
 
   const validateField = (name, value) => {
     let errorMessage = "";
