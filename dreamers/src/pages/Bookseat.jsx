@@ -386,6 +386,45 @@ const BookSeat = () => {
                         onChange={handleChange}
                       />
                     </div>
+                    <div className="mt-8 border-t pt-6">
+        <h3 className="text-lg font-semibold mb-2">Step 2: Pay via Google Pay</h3>
+        <p className="text-sm text-gray-600 mb-2">Scan this QR Code to complete your payment:</p>
+
+        {/* QR Code Image */}
+        <div className="flex justify-center mb-4">
+          <img
+            src="/gpay-qr.jpg"
+            alt="Google Pay QR Code"
+            className="w-48 h-48 object-contain border rounded"
+          />
+        </div>
+
+        {/* Screenshot Upload */}
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Upload Payment Screenshot
+          </label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="w-full text-sm text-gray-700 border border-gray-300 rounded p-2"
+            required
+          />
+        </div>
+
+        {/* Image Preview */}
+        {preview && (
+          <div className="mt-2">
+            <p className="text-sm text-gray-600 mb-1">Screenshot Preview:</p>
+            <img
+              src={preview}
+              alt="Payment Screenshot Preview"
+              className="max-w-xs w-full rounded shadow"
+            />
+          </div>
+        )}
+      </div>
                   </div>
                   
                   <Button type="submit" className="w-full bg-purple-600 hover:bg-purple-700 text-white">
