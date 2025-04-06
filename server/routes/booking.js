@@ -1,27 +1,42 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const upload = require('../utils/cloudinaryUploader');
-const Booking = require('../modals/booking');
+const Booking = require("../modals/booking");
 
-// POST route with image upload
-router.post('/book-seat', upload.single('screenshot'), async (req, res) => {
+// POST /book-seat
+router.post("/book-seat", async (req, res) => {
   try {
-    const { name, phone, email, course } = req.body;
-    const screenshotUrl = req.file.path;
-
-    const booking = new Booking({
+    const {
       name,
-      phone,
       email,
-      course,
-      screenshot: screenshotUrl,
+      phone,
+      courseTitle,
+      preferredBatch,
+      additionalInfo,
+      paymentImage
+    } = req.body;
+
+    // Validate required fields
+    if (!name || !email || !phone || !courseTitle || !preferredBatch || !paymentImage) {
+      return res.status(400).json({ message: "All required fields must be filled." });
+    }
+
+    const newBooking = new Booking({
+      name,
+      email,
+      phone,
+      courseTitle,
+      preferredBatch,
+      additionalInfo,
+      paymentImage, // ✅ Store Cloudinary URL
+      createdAt: new Date()
     });
 
-    await booking.save();
+    await newBooking.save();
 
-    res.status(200).json({ message: 'Booking successful', booking });
+    res.status(201).json({ message: "Booking successful!", booking: newBooking });
   } catch (err) {
-    res.status(500).json({ error: 'Booking failed', details: err.message });
+    console.error("❌ Booking Error:", err.message);
+    res.status(500).json({ message: "Server error. Please try again later." });
   }
 });
 

@@ -6,6 +6,7 @@ const BookingSchema = new mongoose.Schema({
     phone: { type: String, required: true },
     courseTitle: { type: String, required: true },
     preferredBatch: { type: String, required: true },
+    paymentImage:{ type: String, required: true },
     additionalInfo: { type: String }
 }, { timestamps: true });
 
