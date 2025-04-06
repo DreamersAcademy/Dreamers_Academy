@@ -213,8 +213,8 @@ const BookSeat = () => {
       if (formData.paymentImage) {
         const imgFormData = new FormData();
         imgFormData.append("file", formData.paymentImage);
-        imgFormData.append("upload_preset", "your_upload_preset"); // replace
-        imgFormData.append("cloud_name", "your_cloud_name"); // replace
+        imgFormData.append("upload_preset", "dreamers_booking"); // replace
+        imgFormData.append("cloud_name", "ddunj6cag"); // replace
   
         const cloudinaryRes = await axios.post(
           "https://api.cloudinary.com/v1_1/your_cloud_name/image/upload", // replace
