@@ -8,7 +8,7 @@ require("dotenv").config();
 const app = express();
 app.use(express.json());
 app.use(cors({
-  origin: ["https://dreamers-academy-kappa.vercel.app/"], // Allow Vercel frontend
+  origin: ["https://dreamers-academy-kappa.vercel.app"], // Allow Vercel frontend
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
