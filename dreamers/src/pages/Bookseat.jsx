@@ -177,9 +177,9 @@ const BookSeat = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     // Validate all fields before submission
     if (!validateForm()) {
       toast({
@@ -189,60 +189,85 @@ const BookSeat = () => {
       });
       return;
     }
-
-    const user = JSON.parse(localStorage.getItem("user")); 
+  
+    const user = JSON.parse(localStorage.getItem("user"));
     if (!user) {
-        toast({
-          title: "Authentication Error",
-          description: "Please log in first!",
-          variant: "destructive"
-        });
-        navigate("/Login");
-        return;
+      toast({
+        title: "Authentication Error",
+        description: "Please log in first!",
+        variant: "destructive"
+      });
+      navigate("/Login");
+      return;
     }
-
-    const bookingData = {
+  
+    toast({
+      title: "Processing",
+      description: "Uploading your payment screenshot...",
+    });
+  
+    try {
+      let imageUrl = "";
+  
+      // 🌩️ Upload image to Cloudinary if paymentImage is present
+      if (formData.paymentImage) {
+        const imgFormData = new FormData();
+        imgFormData.append("file", formData.paymentImage);
+        imgFormData.append("upload_preset", "your_upload_preset"); // replace
+        imgFormData.append("cloud_name", "your_cloud_name"); // replace
+  
+        const cloudinaryRes = await axios.post(
+          "https://api.cloudinary.com/v1_1/your_cloud_name/image/upload", // replace
+          imgFormData
+        );
+  
+        imageUrl = cloudinaryRes.data.secure_url;
+      }
+  
+      // 📦 Prepare full booking data with image URL
+      const bookingData = {
         name: formData.name,
         email: user.email,
         phone: formData.phone,
         courseTitle,
         preferredBatch: formData.preferredBatch,
-        additionalInfo: formData.additionalInfo || ""
-    };
-
-    console.log("📢 Sending Booking Data:", bookingData);
-
-    toast({
-      title: "Processing",
-      description: "Submitting your registration...",
-    });
-
-    axios.post("https://dreamers-academy.onrender.com/book-seat", bookingData)
-    .then((res) => {
-        console.log("✅ Booking Success:", res.data);
-        
-        toast({
-          title: "Success!",
-          description: "Your seat has been booked successfully.",
-          variant: "success"
-        });
-    
-        // Wait for 2 seconds before redirecting
-        setTimeout(() => {
-            navigate("/dashboard");
-        }, 2000);
-    })
-    .catch(err => {
-        console.error("🚨 Booking Error:", err.message);
-        
-        toast({
-          title: "Booking Failed",
-          description: err.response?.data?.message || "Something went wrong. Please try again.",
-          variant: "destructive"
-        });
-    });
+        additionalInfo: formData.additionalInfo || "",
+        paymentImage: imageUrl,
+      };
+  
+      console.log("📢 Sending Booking Data:", bookingData);
+  
+      toast({
+        title: "Processing",
+        description: "Submitting your registration...",
+      });
+  
+      const res = await axios.post(
+        "https://dreamers-academy.onrender.com/book-seat",
+        bookingData
+      );
+  
+      console.log("✅ Booking Success:", res.data);
+  
+      toast({
+        title: "Success!",
+        description: "Your seat has been booked successfully.",
+        variant: "success"
+      });
+  
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 2000);
+    } catch (err) {
+      console.error("🚨 Error:", err.message);
+      toast({
+        title: "Booking Failed",
+        description: err.response?.data?.message || "Something went wrong. Please try again.",
+        variant: "destructive"
+      });
+    }
   };
-
+  
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-50 py-8 px-4 md:px-8">
       <div className="max-w-4xl mx-auto">
@@ -398,7 +423,27 @@ const BookSeat = () => {
                     </div>
                     
                   </div>
-                  
+                  <div>
+  <Label htmlFor="paymentImage">Upload Payment Screenshot</Label>
+  <Input 
+    id="paymentImage" 
+    type="file" 
+    accept="image/*" 
+    className="mt-1"
+    onChange={handleImageChange}
+  />
+  {preview && (
+    <div className="mt-3">
+      <p className="text-sm text-gray-500">Preview:</p>
+      <img 
+        src={preview} 
+        alt="Payment Preview" 
+        className="mt-2 max-h-60 rounded-md border border-gray-300 shadow-md" 
+      />
+    </div>
+  )}
+</div>
+
                   <Button type="submit" className="w-full bg-purple-600 hover:bg-purple-700 text-white">
                     Complete Registration
                   </Button>
