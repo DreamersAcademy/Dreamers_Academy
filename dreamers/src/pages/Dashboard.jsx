@@ -563,10 +563,10 @@ const Dashboard = () => {
 </div>
 <Button 
                                                     className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 text-xs md:text-sm"
-                                                    onClick={() => deleteBooking(booking._id)}
+                                                    onClick={() => navigate('/payment')}
 
                                                 >
-                                                    Delete
+                                                    Pay Now
                                                 </Button>
                         </div>
                     </Card>
