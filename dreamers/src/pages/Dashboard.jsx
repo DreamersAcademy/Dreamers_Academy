@@ -84,6 +84,8 @@ const Dashboard = () => {
                 setLoading(false); // Stop loading
             });
     };
+    const [totalFee, setTotalFee] = useState(0);
+
     useEffect(() => {
         const calculateTotalFee = () => {
             let total = 0;
@@ -99,10 +101,9 @@ const Dashboard = () => {
             setTotalFee(total);
         };
     
-        if (bookings.length > 0) {
-            calculateTotalFee();
-        }
+        calculateTotalFee();
     }, [bookings, feesStructure]);
+    
     
     
     const deleteBooking = async (id) => {
