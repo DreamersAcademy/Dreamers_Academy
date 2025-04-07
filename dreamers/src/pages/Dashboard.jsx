@@ -84,19 +84,25 @@ const Dashboard = () => {
                 setLoading(false); // Stop loading
             });
     };
-    const calculateTotalFee = () => {
-        let total = 0;
+    useEffect(() => {
+        const calculateTotalFee = () => {
+            let total = 0;
     
-        bookings.forEach(booking => {
-            const course = feesStructure.find(fee => fee.title === booking.courseTitle);
-            if (course && course.discountedFee) {
-                const numericFee = parseInt(course.discountedFee.replace(/[₹,]/g, ""));
-                total += numericFee;
-            }
-        });
+            bookings.forEach(booking => {
+                const course = feesStructure.find(fee => fee.title === booking.courseTitle);
+                if (course && course.discountedFee) {
+                    const numericFee = parseInt(course.discountedFee.replace(/[₹,]/g, ""));
+                    total += numericFee;
+                }
+            });
     
-        return total;
-    };
+            setTotalFee(total);
+        };
+    
+        if (bookings.length > 0) {
+            calculateTotalFee();
+        }
+    }, [bookings, feesStructure]);
     
     
     const deleteBooking = async (id) => {
