@@ -558,16 +558,20 @@ const Dashboard = () => {
                                     ))}
                                 </tbody>
                             </table>
-                            <div className="p-4 text-right text-sm font-semibold text-gray-700 dark:text-white border-t dark:border-gray-800">
-    Total Amount Payable: ₹{calculateTotalFee()}
+                            <div className="border-t dark:border-gray-800">
+    <div className="p-4 text-right text-sm font-semibold text-gray-700 dark:text-white">
+        Total Amount Payable: ₹{calculateTotalFee()}
+    </div>
+    <div className="p-4 flex justify-center">
+        <Button 
+            className="bg-green-600 hover:bg-green-700 text-white px-5 py-2 text-sm font-medium"
+            onClick={() => navigate('/payment')}
+        >
+            Pay Now
+        </Button>
+    </div>
 </div>
-<Button 
-                                                    className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 text-xs md:text-sm"
-                                                    onClick={() => navigate('/payment')}
 
-                                                >
-                                                    Pay Now
-                                                </Button>
                         </div>
                     </Card>
                 ) : (
