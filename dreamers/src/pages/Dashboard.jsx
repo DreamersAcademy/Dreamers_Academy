@@ -84,26 +84,19 @@ const Dashboard = () => {
                 setLoading(false); // Stop loading
             });
     };
-    const [totalFee, setTotalFee] = useState(0);
-
-    useEffect(() => {
-        const calculateTotalFee = () => {
-            let total = 0;
+    const calculateTotalFee = () => {
+        let total = 0;
     
-            bookings.forEach(booking => {
-                const course = feesStructure.find(fee => fee.title === booking.courseTitle);
-                if (course && course.discountedFee) {
-                    const numericFee = parseInt(course.discountedFee.replace(/[₹,]/g, ""));
-                    total += numericFee;
-                }
-            });
+        bookings.forEach(booking => {
+            const course = feesStructure.find(fee => fee.title === booking.courseTitle);
+            if (course && course.discountedFee) {
+                const numericFee = parseInt(course.discountedFee.replace(/[₹,]/g, ""));
+                total += numericFee;
+            }
+        });
     
-            setTotalFee(total);
-        };
-    
-        calculateTotalFee();
-    }, [bookings, feesStructure]);
-    
+        return total;
+    };
     
     
     const deleteBooking = async (id) => {
