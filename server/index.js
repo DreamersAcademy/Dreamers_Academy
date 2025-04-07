@@ -100,19 +100,18 @@ app.get("/bookings/:email", async (req, res) => {
 });
 
 // ✅ Delete a Booking
-app.delete("/bookings/:email/:id", async (req, res) => {
+app.delete("/bookings/:id", async (req, res) => {
   try {
-    const { email, id } = req.params;
-    const booking = await BookingModel.findOne({ _id: id, email });
-    if (!booking) {
-      return res.status(404).json({ message: "Booking not found for this user" });
+    const deletedBooking = await BookingModel.findByIdAndDelete(req.params.id);
+    if (!deletedBooking) {
+      return res.status(404).json({ message: "Booking not found" });
     }
-    await BookingModel.findByIdAndDelete(id);
     res.status(200).json({ message: "Booking deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: "Failed to delete booking", details: error.message });
   }
 });
+
 
 // ✅ Get All Bookings
 app.get("/book-seat", async (req, res) => {
