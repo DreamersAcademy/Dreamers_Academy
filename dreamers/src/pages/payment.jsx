@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Button } from "../components/ui/button"; // adjust to your Button path
 import axios from "axios";
 
-const payment = () => {
+const PaymentPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [amount, setAmount] = useState(0);
@@ -53,4 +53,4 @@ const payment = () => {
   );
 };
 
-export default payment;
+export default PaymentPage;
