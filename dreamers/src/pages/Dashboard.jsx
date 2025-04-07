@@ -52,7 +52,7 @@ const Dashboard = () => {
     }, [navigate]);
 
     const [loading, setLoading] = useState(false);
-    const calculateTotalFee = (bookings, feesStructure) => {
+    const calculateFee = (bookings, feesStructure) => {
         return bookings.map((booking) => {
             const courseTitle = booking.courseTitle || booking.title || ""; // Adjust key as per your data
     
@@ -579,7 +579,7 @@ const Dashboard = () => {
                                 </tbody>
                             </table>
                             <div className="p-4 text-right text-sm font-semibold text-gray-700 dark:text-white border-t dark:border-gray-800">
-    Total Amount Payable: ₹{calculateTotalFee()}
+    Total Amount Payable: ₹{calculateFee()}
 </div>
 
                         </div>
