@@ -198,25 +198,25 @@ const Dashboard = () => {
 
     const feesStructure = [
         {
-            course: "Basic English Course",
+            title: "Basic English Course",
             duration: "3 months",
             normalFee: "₹6,000",
             discountedFee: "₹5,200"
         },
         {
-            course: "IELTS Preparation",
+            title: "IELTS Preparation",
             duration: "2 months",
             normalFee: "₹8,500",
             discountedFee: "₹7,800"
         },
         {
-            course: "Business English",
+            title: "Business English",
             duration: "4 months",
             normalFee: "₹10,000",
             discountedFee: "₹9,200"
         },
         {
-            course: "TOEFL Preparation",
+            title: "TOEFL Preparation",
             duration: "2 months",
             normalFee: "₹8,000",
             discountedFee: "₹7,400"
@@ -395,7 +395,7 @@ const Dashboard = () => {
                         <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
                             {feesStructure.map((fee, index) => (
                                 <tr key={index} className="hover:bg-purple-50/30 dark:hover:bg-purple-900/10 transition-colors">
-                                    <td className="px-3 md:px-6 py-3 md:py-4 whitespace-nowrap text-xs md:text-sm font-medium text-gray-900 dark:text-white">{fee.course}</td>
+                                    <td className="px-3 md:px-6 py-3 md:py-4 whitespace-nowrap text-xs md:text-sm font-medium text-gray-900 dark:text-white">{fee.title}</td>
                                     <td className="px-3 md:px-6 py-3 md:py-4 whitespace-nowrap text-xs md:text-sm text-gray-500 dark:text-gray-400">{fee.duration}</td>
                                     <td className="px-3 md:px-6 py-3 md:py-4 whitespace-nowrap text-xs md:text-sm text-gray-500 dark:text-gray-400 line-through">{fee.normalFee}</td>
                                     <td className="px-3 md:px-6 py-3 md:py-4 whitespace-nowrap text-xs md:text-sm font-semibold text-green-600 dark:text-green-400">{fee.discountedFee}</td>
