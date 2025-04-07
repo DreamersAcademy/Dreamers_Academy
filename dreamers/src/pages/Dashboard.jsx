@@ -565,8 +565,8 @@ const Dashboard = () => {
     <div className="p-4 flex justify-center">
         <Button 
             className="bg-green-600 hover:bg-green-700 text-white px-5 py-2 text-sm font-medium"
-            onClick={() => navigate('/payment')}
-        >
+            onClick={() => navigate('/payment', { state: { amount: calculateTotalFee() } })}
+            >
             Pay Now
         </Button>
     </div>
