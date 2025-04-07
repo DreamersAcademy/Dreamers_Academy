@@ -90,12 +90,14 @@ const Dashboard = () => {
         bookings.forEach(booking => {
             const course = feesStructure.find(fee => fee.title === booking.courseTitle);
             if (course && course.discountedFee) {
-                total += parseFloat(course.discountedFee);
+                const numericFee = parseInt(course.discountedFee.replace(/[₹,]/g, ""));
+                total += numericFee;
             }
         });
     
         return total;
     };
+    
     
     
     const deleteBooking = async (bookingId) => {
