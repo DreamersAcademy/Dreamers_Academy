@@ -52,6 +52,37 @@ const Dashboard = () => {
     }, [navigate]);
 
     const [loading, setLoading] = useState(false);
+    const calculateTotalFee = (bookings, feesStructure) => {
+        return bookings.map((booking) => {
+            const courseTitle = booking.courseTitle || booking.title || ""; // Adjust key as per your data
+    
+            // Try to find matching fee data (normalize titles)
+            const matchedFee = feesStructure.find(fee =>
+                fee.title.toLowerCase().includes(courseTitle.toLowerCase())
+            );
+    
+            const feeInfo = matchedFee
+                ? {
+                    matchedTitle: matchedFee.title,
+                    duration: matchedFee.duration,
+                    normalFee: matchedFee.normalFee,
+                    discountedFee: matchedFee.discountedFee,
+                    finalFee: matchedFee.discountedFee || matchedFee.normalFee
+                }
+                : {
+                    matchedTitle: null,
+                    duration: null,
+                    normalFee: null,
+                    discountedFee: null,
+                    finalFee: "Fee info not available"
+                };
+    
+            return {
+                ...booking,
+                ...feeInfo
+            };
+        });
+    };
 
     const fetchUserBookings = (email) => {
         if (!email) {
@@ -85,37 +116,7 @@ const Dashboard = () => {
                 setLoading(false); // Stop loading
             });
     };
-    const calculateTotalFee = (bookings, feesStructure) => {
-        return bookings.map((booking) => {
-            const courseTitle = booking.courseTitle || booking.title || ""; // Adjust key as per your data
     
-            // Try to find matching fee data (normalize titles)
-            const matchedFee = feesStructure.find(fee =>
-                fee.title.toLowerCase().includes(courseTitle.toLowerCase())
-            );
-    
-            const feeInfo = matchedFee
-                ? {
-                    matchedTitle: matchedFee.title,
-                    duration: matchedFee.duration,
-                    normalFee: matchedFee.normalFee,
-                    discountedFee: matchedFee.discountedFee,
-                    finalFee: matchedFee.discountedFee || matchedFee.normalFee
-                }
-                : {
-                    matchedTitle: null,
-                    duration: null,
-                    normalFee: null,
-                    discountedFee: null,
-                    finalFee: "Fee info not available"
-                };
-    
-            return {
-                ...booking,
-                ...feeInfo
-            };
-        });
-    };
     
     
     const deleteBooking = async (id) => {
