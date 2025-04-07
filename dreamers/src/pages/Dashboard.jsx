@@ -65,7 +65,8 @@ const Dashboard = () => {
         axios.get(`https://dreamers-academy.onrender.com/bookings/${email}`)
             .then((res) => {
                 console.log("✅ Bookings fetched successfully:", res.data);
-                setBookings(res.data);
+                const enrichedBookings = calculateFees(res.data, feesStructure);
+                setBookings(enrichedBookings);
                 toast({
                     title: "Bookings loaded",
                     description: "Your course bookings have been loaded successfully.",
@@ -84,18 +85,36 @@ const Dashboard = () => {
                 setLoading(false); // Stop loading
             });
     };
-    const calculateTotalFee = () => {
-        let total = 0;
+    const calculateTotalFee = (bookings, feesStructure) => {
+        return bookings.map((booking) => {
+            const courseTitle = booking.courseTitle || booking.title || ""; // Adjust key as per your data
     
-        bookings.forEach(booking => {
-            const course = feesStructure.find(fee => fee.title === booking.courseTitle);
-            if (course && course.discountedFee) {
-                const numericFee = parseInt(course.discountedFee.replace(/[₹,]/g, ""));
-                total += numericFee;
-            }
+            // Try to find matching fee data (normalize titles)
+            const matchedFee = feesStructure.find(fee =>
+                fee.title.toLowerCase().includes(courseTitle.toLowerCase())
+            );
+    
+            const feeInfo = matchedFee
+                ? {
+                    matchedTitle: matchedFee.title,
+                    duration: matchedFee.duration,
+                    normalFee: matchedFee.normalFee,
+                    discountedFee: matchedFee.discountedFee,
+                    finalFee: matchedFee.discountedFee || matchedFee.normalFee
+                }
+                : {
+                    matchedTitle: null,
+                    duration: null,
+                    normalFee: null,
+                    discountedFee: null,
+                    finalFee: "Fee info not available"
+                };
+    
+            return {
+                ...booking,
+                ...feeInfo
+            };
         });
-    
-        return total;
     };
     
     
