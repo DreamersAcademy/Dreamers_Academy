@@ -52,37 +52,6 @@ const Dashboard = () => {
     }, [navigate]);
 
     const [loading, setLoading] = useState(false);
-    const calculateFee = (bookings, feesStructure) => {
-        return bookings.map((booking) => {
-            const courseTitle = booking.courseTitle || booking.title || ""; // Adjust key as per your data
-    
-            // Try to find matching fee data (normalize titles)
-            const matchedFee = feesStructure.find(fee =>
-                fee.title.toLowerCase().includes(courseTitle.toLowerCase())
-            );
-    
-            const feeInfo = matchedFee
-                ? {
-                    matchedTitle: matchedFee.title,
-                    duration: matchedFee.duration,
-                    normalFee: matchedFee.normalFee,
-                    discountedFee: matchedFee.discountedFee,
-                    finalFee: matchedFee.discountedFee || matchedFee.normalFee
-                }
-                : {
-                    matchedTitle: null,
-                    duration: null,
-                    normalFee: null,
-                    discountedFee: null,
-                    finalFee: "Fee info not available"
-                };
-    
-            return {
-                ...booking,
-                ...feeInfo
-            };
-        });
-    };
 
     const fetchUserBookings = (email) => {
         if (!email) {
@@ -96,8 +65,7 @@ const Dashboard = () => {
         axios.get(`https://dreamers-academy.onrender.com/bookings/${email}`)
             .then((res) => {
                 console.log("✅ Bookings fetched successfully:", res.data);
-                const enrichedBookings = calculateFees(res.data, feesStructure);
-                setBookings(enrichedBookings);
+                setBookings(res.data);
                 toast({
                     title: "Bookings loaded",
                     description: "Your course bookings have been loaded successfully.",
@@ -116,7 +84,19 @@ const Dashboard = () => {
                 setLoading(false); // Stop loading
             });
     };
+    const calculateTotalFee = () => {
+        let total = 0;
     
+        bookings.forEach(booking => {
+            const course = feesStructure.find(fee => fee.title === booking.courseTitle);
+            if (course && course.discountedFee) {
+                const numericFee = parseInt(course.discountedFee.replace(/[₹,]/g, ""));
+                total += numericFee;
+            }
+        });
+    
+        return total;
+    };
     
     
     const deleteBooking = async (id) => {
@@ -579,7 +559,7 @@ const Dashboard = () => {
                                 </tbody>
                             </table>
                             <div className="p-4 text-right text-sm font-semibold text-gray-700 dark:text-white border-t dark:border-gray-800">
-    Total Amount Payable: ₹{calculateFee()}
+    Total Amount Payable: ₹{calculateTotalFee()}
 </div>
 
                         </div>
