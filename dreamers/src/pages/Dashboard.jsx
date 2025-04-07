@@ -218,7 +218,7 @@ const Dashboard = () => {
 
     const feesStructure = [
         {
-            title: "Basic English Course",
+            title: "Basic English",
             duration: "3 months",
             normalFee: "₹6,000",
             discountedFee: "₹5,200"
