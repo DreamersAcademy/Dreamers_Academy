@@ -561,7 +561,13 @@ const Dashboard = () => {
                             <div className="p-4 text-right text-sm font-semibold text-gray-700 dark:text-white border-t dark:border-gray-800">
     Total Amount Payable: ₹{calculateTotalFee()}
 </div>
+<Button 
+                                                    className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 text-xs md:text-sm"
+                                                    onClick={() => deleteBooking(booking._id)}
 
+                                                >
+                                                    Delete
+                                                </Button>
                         </div>
                     </Card>
                 ) : (
