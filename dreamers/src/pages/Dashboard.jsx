@@ -99,9 +99,9 @@ const Dashboard = () => {
     };
     
     
-    const deleteBooking = async (bookingId) => {
+    const deleteBooking = async (id) => {
         try {
-            const res = await axios.delete(`https://dreamers-academy.onrender.com/bookings/${bookingId}`);
+            const res = await axios.delete(`https://dreamers-academy.onrender.com/bookings/${id}`);
     
             if (res.status === 200) {
                 toast({
@@ -110,7 +110,7 @@ const Dashboard = () => {
                 });
     
                 // Remove the deleted booking from local state
-                setBookings(prev => prev.filter(b => b._id !== bookingId));
+                setBookings(prev => prev.filter(b => b._id !== id));
             } else {
                 toast({
                     title: "Failed to delete",
