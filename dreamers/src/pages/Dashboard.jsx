@@ -99,21 +99,32 @@ const Dashboard = () => {
     };
     
     
-    
     const deleteBooking = async (bookingId) => {
         try {
-            const response = await fetch(`http://localhost:5000/api/bookings/${bookingId}`, {
-                method: 'DELETE',
-            });
+            const res = await axios.delete(`https://dreamers-academy.onrender.com/bookings/${bookingId}`);
     
-            if (response.ok) {
-                // Remove from frontend state
+            if (res.status === 200) {
+                toast({
+                    title: "Booking deleted",
+                    description: "Your booking was successfully removed.",
+                });
+    
+                // Remove the deleted booking from local state
                 setBookings(prev => prev.filter(b => b._id !== bookingId));
             } else {
-                console.error('❌ Failed to delete booking');
+                toast({
+                    title: "Failed to delete",
+                    description: "Something went wrong while deleting the booking.",
+                    variant: "destructive"
+                });
             }
         } catch (error) {
-            console.error('⚠️ Error deleting booking:', error);
+            console.error("❌ Error deleting booking:", error);
+            toast({
+                title: "Error",
+                description: "Could not delete the booking. Please try again.",
+                variant: "destructive"
+            });
         }
     };
     
