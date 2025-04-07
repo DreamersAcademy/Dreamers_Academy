@@ -84,19 +84,23 @@ const Dashboard = () => {
                 setLoading(false); // Stop loading
             });
     };
-    const calculateTotalFee = () => {
-        let total = 0;
+    const [totalFee, setTotalFee] = useState(0);
+
+    useEffect(() => {
+        if (bookings.length && feesStructure.length) {
+            let total = 0;
     
-        bookings.forEach(booking => {
-            const course = feesStructure.find(fee => fee.title === booking.courseTitle);
-            if (course && course.discountedFee) {
-                const numericFee = parseInt(course.discountedFee.replace(/[₹,]/g, ""));
-                total += numericFee;
-            }
-        });
+            bookings.forEach(booking => {
+                const course = feesStructure.find(fee => fee.title === booking.courseTitle);
+                if (course && course.discountedFee) {
+                    const numericFee = parseInt(course.discountedFee.replace(/[₹,]/g, ""));
+                    total += numericFee;
+                }
+            });
     
-        return total;
-    };
+            setTotalFee(total);
+        }
+    }, [bookings, feesStructure]);
     
     
     const deleteBooking = async (id) => {
@@ -559,7 +563,7 @@ const Dashboard = () => {
                                 </tbody>
                             </table>
                             <div className="p-4 text-right text-sm font-semibold text-gray-700 dark:text-white border-t dark:border-gray-800">
-    Total Amount Payable: ₹{calculateTotalFee()}
+                            Total Fee to be paid: ₹{totalFee}
 </div>
 
                         </div>
