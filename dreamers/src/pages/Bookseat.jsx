@@ -85,17 +85,7 @@ const BookSeat = () => {
       }));
     }
   }, [courseTitle, navigate]);
-  const [paymentImage, setPaymentImage] = useState(null);
-  const [preview, setPreview] = useState(null);
-
-  const handleImageChange = (e) => {
-    const file = e.target.files?.[0];
-    console.log("Image selected:", file); // ✅ Confirm selection
-    if (file) {
-      setPaymentImage(file);
-      setPreview(URL.createObjectURL(file));
-    }
-  };
+  
   
 
   const validateField = (name, value) => {
@@ -209,22 +199,7 @@ const BookSeat = () => {
     });
   
     try {
-      let imageUrl = "";
-  
-      // 🌩️ Upload image to Cloudinary if paymentImage is present
-      if (paymentImage) {
-        const imgFormData = new FormData();
-        imgFormData.append("file", paymentImage);
-        imgFormData.append("upload_preset", "dreamers_booking"); // replace
-        imgFormData.append("cloud_name", "ddunj6cag"); // replace
-  
-        const cloudinaryRes = await axios.post(
-          "https://api.cloudinary.com/v1_1/ddunj6cag/image/upload", // replace
-          imgFormData
-        );
-  
-        imageUrl = cloudinaryRes.data.secure_url;
-      }
+      
   
       // 📦 Prepare full booking data with image URL
       const bookingData = {
@@ -234,7 +209,6 @@ const BookSeat = () => {
         courseTitle,
         preferredBatch: formData.preferredBatch,
         additionalInfo: formData.additionalInfo || "",
-        paymentImage: imageUrl,
       };
   
       console.log("📢 Sending Booking Data:", bookingData);
@@ -425,26 +399,7 @@ const BookSeat = () => {
                     </div>
                     
                   </div>
-                  <div>
-  <Label htmlFor="paymentImage">Upload Payment Screenshot</Label>
-  <Input 
-    id="paymentImage" 
-    type="file" 
-    accept="image/*" 
-    className="mt-1"
-    onChange={handleImageChange}
-  />
-  {preview && (
-    <div className="mt-3">
-      <p className="text-sm text-gray-500">Preview:</p>
-      <img 
-        src={preview} 
-        alt="Payment Preview" 
-        className="mt-2 max-h-60 rounded-md border border-gray-300 shadow-md" 
-      />
-    </div>
-  )}
-</div>
+               
 
                   <Button type="submit" className="w-full bg-purple-600 hover:bg-purple-700 text-white">
                     Complete Registration
