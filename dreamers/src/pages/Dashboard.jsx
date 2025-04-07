@@ -102,27 +102,21 @@ const Dashboard = () => {
     
     const deleteBooking = async (bookingId) => {
         try {
-            const res = await axios.delete(`https://dreamers-academy.onrender.com/bookings/${bookingId}`);
-    
-            if (res.status === 200) {
-                setBookings(prevBookings => prevBookings.filter(booking => booking.id !== bookingId));
-    
-                toast({
-                    title: "Booking deleted",
-                    description: "The booking has been successfully deleted.",
-                });
-    
-                console.log(`✅ Booking ${bookingId} deleted successfully.`);
-            }
-        } catch (err) {
-            console.error("❌ Error deleting booking:", err);
-            toast({
-                title: "Error deleting booking",
-                description: "There was a problem deleting your booking.",
-                variant: "destructive"
+            const response = await fetch(`http://localhost:5000/api/bookings/${bookingId}`, {
+                method: 'DELETE',
             });
+    
+            if (response.ok) {
+                // Remove from frontend state
+                setBookings(prev => prev.filter(b => b._id !== bookingId));
+            } else {
+                console.error('❌ Failed to delete booking');
+            }
+        } catch (error) {
+            console.error('⚠️ Error deleting booking:', error);
         }
     };
+    
     
 
     const handleLogout = () => {
@@ -543,7 +537,8 @@ const Dashboard = () => {
                                             <td className="px-3 md:px-6 py-3 md:py-4 whitespace-nowrap">
                                                 <Button 
                                                     className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 text-xs md:text-sm"
-                                                    onClick={() => deleteBooking(booking.id)}
+                                                    onClick={() => deleteBooking(booking._id)}
+
                                                 >
                                                     Delete
                                                 </Button>
